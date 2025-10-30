@@ -16,6 +16,7 @@
             <tr>
                 <th>SL</th>
                 <th>Name</th>
+                <th>Profile Image</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Action</th>
@@ -27,6 +28,14 @@
                 <td>{{ $users->firstItem() + $i }}</td>
                 {{-- <td>{{ $item['id'] }}</td> --}}
                 <td>{{ $item['first_name'] }} {{ $item['last_name'] }}</td>
+                <td>
+                   @if($item['photo'] !==null)
+                    <img src="{{ asset('storage/'.$item['photo']) }}" alt="User Photo" class="rounded-circle me-2" width="50">
+                   @else
+                     <img src="https://placehold.co/50" class="rounded-circle me-2" alt="User Photo">
+                    @endif
+                        {{ $item['first_name'] }} {{ $item['last_name'] }}
+                </td>
                 <td>{{ $item['email'] }}</td>
                 <td>{{ $item['role'] }}</td>
                 <td>

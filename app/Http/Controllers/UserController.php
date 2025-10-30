@@ -32,7 +32,7 @@ class UserController extends Controller
         //         ->get();
 
         $users = User::from('users as u')
-                ->select('u.id', 'u.first_name', 'u.last_name', 'u.email', 'r.name as role')
+                ->select('u.id', 'u.first_name', 'u.last_name','u.photo', 'u.email', 'r.name as role')
                 ->join('roles as r', 'u.role_id', '=', 'r.id')
                 ->orderBy('u.id', 'desc')
                 // ->skip(0)
@@ -85,7 +85,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        //  dd($request->file('photo'));
         // dd($request->all());
+
 
         // $user =new User();  
         // $user->first_name = $request->first_name;
@@ -99,14 +101,28 @@ class UserController extends Controller
         $request->validate([
             'first_name' => 'required|min:2|max:20',
             'last_name' => ['required', 'min:2', 'max:20'],
+            'photo' => ['mimes:jpg,png,jpeg', 'image', 'max:500', 'dimensions:ratio=1/1,width=200,height=200'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:6', 'confirmed'],
+        ],
+        [
+            'photo.mimes' => 'Image must be jpg,jpeg or png',
+            'photo.dimensions' => 'Image dimentions must be width:200 x height:200',
         ]);
 
+        if($request->hasFile('photo')){
+            // dd('Photo found');
+            $photo = $request->file('photo')->store('users','public');
+        }else{
+            // dd('Photo not found');
+            $photo = null;
+        }
+        // dd($photo);
         // dd($request->all());
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'photo' => $photo,
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => $request->role_id

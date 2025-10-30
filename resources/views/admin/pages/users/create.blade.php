@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
    <h2>User Form</h2>
-   <form action="{{ route('users.store') }}" method="POST">
+   <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
         <div class="row g-3">
             <div class="col-md-6">
@@ -17,6 +17,13 @@
                 <label>Last Name</label>
                 <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}">
                 @error('last_name')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="col-md-6">
+                <label>Profile Image <span class="text-muted" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<span class=bg-primary><ul class=text-start ps-3 mb-1><li>Image must be jpg,jpeg or png</li><li>Image dimension must be 200 x 200</li><li>Image size must be less than 500kb</li></ul></span>"><i class="fa-solid fa-circle-info"></i></span></label>
+                <input type="file" name="photo" class="form-control" value="{{ old('photo') }}">
+                @error('photo')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
