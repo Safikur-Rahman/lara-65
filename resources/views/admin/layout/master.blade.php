@@ -25,16 +25,26 @@
                 <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('trainees.index') }}">Trainees</a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown link
+                                @if(Auth::user()->photo !==null)
+                                <img src="storage/{{ (Auth::user()->photo) }}" alt="photo" height="30" width="30" class="rounded-circle">
+                                @else
+                                <img src="http://placehold.co/35" class="rounded-circle me-2" alt="profile image">
+                                @endif
+                                {{ Auth::user()->first_name." ".Auth::user()->last_name }}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">My Profile</a></li>
+                        <li>
+                            <form action="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                             </form>
+                        </li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
