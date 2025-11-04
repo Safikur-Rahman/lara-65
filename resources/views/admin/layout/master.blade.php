@@ -40,12 +40,12 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route('profile.edit') }}">My Profile</a></li>
                         <li>
-                            <form action="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="dropdown-item">Logout</button>
                              </form>
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                       
                     </ul>
                 </li>
             </ul>
