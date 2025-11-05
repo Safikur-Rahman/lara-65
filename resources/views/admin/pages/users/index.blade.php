@@ -25,6 +25,7 @@
         <tbody>
             @foreach ($users as $i => $item)
             <tr>
+                
                 <td>{{ $users->firstItem() + $i }}</td>
                 {{-- <td>{{ $item['id'] }}</td> --}}
                 <td>{{ $item['first_name'] }} {{ $item['last_name'] }}</td>
@@ -39,6 +40,7 @@
                 <td>{{ $item['email'] }}</td>
                 <td>{{ $item['role'] }}</td>
                 <td>
+                    {{-- @if ($item['id']=== Auth::user()->id) --}}
                     <a href="{{ route('users.show', $item['id']) }}" class="btn btn-dark">Details</a>
                     <a href="{{ route('users.edit', ['user' => $item['id'], 'page' => request('page', 1)]) }}" class="btn btn-success">Edit</a>
                     
@@ -47,6 +49,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
+                {{-- @endif --}}
                 </td>
             </tr>
             @endforeach
@@ -59,5 +62,6 @@
             </tr>
         </tfoot>
    </table>
+     
 </div>
 @endsection
